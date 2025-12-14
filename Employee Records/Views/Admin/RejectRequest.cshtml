@@ -1,0 +1,55 @@
+@model Employee_Records.Models.PayslipRequest
+@{
+    ViewData["Title"] = "Reject Payslip Request";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0"><i class="bi bi-x-circle"></i> Reject Payslip Request</h4>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning">
+                        <strong>Warning:</strong> You are about to reject a payslip request. This action cannot be undone.
+                    </div>
+
+                    <dl class="mb-4">
+                        <dt>Employee</dt>
+                        <dd><strong>@Model.Employee?.Name</strong></dd>
+
+                        <dt>Pay Period</dt>
+                        <dd><span class="badge bg-info">@Model.PayPeriodDisplay</span></dd>
+
+                        <dt>Request Date</dt>
+                        <dd>@Model.RequestDate.ToString("MMM dd, yyyy h:mm tt")</dd>
+                    </dl>
+
+                    <form asp-action="RejectRequestConfirm" method="post">
+                        <input type="hidden" name="requestId" value="@Model.Id" />
+                        
+                        <div class="mb-4">
+                            <label class="form-label">Rejection Reason</label>
+                            <textarea name="rejectionReason" class="form-control" rows="4" 
+                                      placeholder="Please provide a reason for rejecting this request..." required></textarea>
+                            <small class="text-muted">
+                                This reason will be visible to the employee.
+                            </small>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-danger flex-grow-1">
+                                <i class="bi bi-x-circle"></i> Confirm Rejection
+                            </button>
+                            <a asp-action="PayslipRequests" class="btn btn-outline-secondary">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

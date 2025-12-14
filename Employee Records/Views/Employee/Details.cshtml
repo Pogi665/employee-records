@@ -1,0 +1,107 @@
+@model EmployeeModel.Employee
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+
+<h2>Employee Details</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <strong>Employee ID: </strong> 
+                @if (!string.IsNullOrEmpty(Model.EmployeeCode))
+                {
+                    <span class="badge bg-primary fs-6">@Model.EmployeeCode</span>
+                }
+                else
+                {
+                    <span class="text-muted">Not assigned</span>
+                }
+            </li>
+            <li class="list-group-item"><strong>Name: </strong> @Model.Name</li>
+            <li class="list-group-item"><strong>Email: </strong> @Model.Email</li>
+            <li class="list-group-item"><strong>Position: </strong> @Model.Position</li>
+            <li class="list-group-item">
+                <strong>Department: </strong> 
+                @if (Model.Department != null)
+                {
+                    <span class="badge bg-secondary">@Model.Department.Name</span>
+                }
+                else
+                {
+                    <span class="text-muted">Not assigned</span>
+                }
+            </li>
+            <li class="list-group-item"><strong>Salary: </strong> @Model.Salary.ToString("N2")</li>
+            <li class="list-group-item">
+                <strong>Address: </strong> 
+                @if (!string.IsNullOrEmpty(Model.Address))
+                {
+                    @Model.Address
+                }
+                else
+                {
+                    <span class="text-muted">No address on record</span>
+                }
+            </li>
+        </ul>
+
+        <br />
+
+        <a href="/Employee/Index" class="btn btn-secondary">Back</a>
+        <a href="/Employee/Edit/@Model.Id" class="btn btn-warning">Edit</a>
+        <a href="/Employee/Delete/@Model.Id" class="btn btn-danger">Delete</a>
+    </div>
+    
+    <div class="col-md-6">
+        @if (Model.Latitude.HasValue && Model.Longitude.HasValue)
+        {
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-geo-alt-fill"></i> Employee Location
+                </div>
+                <div id="employeeMap" style="height: 350px;"></div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">
+                <strong>No location available.</strong><br />
+                Edit this employee record and add an address to see their location on the map.
+            </div>
+        }
+    </div>
+</div>
+
+@if (Model.Latitude.HasValue && Model.Longitude.HasValue)
+{
+    @section Styles {
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    }
+    
+    @section Scripts {
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const lat = @Model.Latitude.Value;
+                const lon = @Model.Longitude.Value;
+
+                const map = L.map('employeeMap').setView([lat, lon], 15);
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                const marker = L.marker([lat, lon]).addTo(map);
+
+                // Popup when clicking on marker
+                marker.bindPopup(`
+                    <div style="padding: 4px;">
+                        <strong>@Model.Name</strong><br/>
+                        <small>@Model.Position</small><br/>
+                        <small class="text-muted">@Model.Address</small>
+                    </div>
+                `).openPopup();
+            });
+        </script>
+    }
+}

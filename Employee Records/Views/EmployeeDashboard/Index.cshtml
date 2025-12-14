@@ -1,0 +1,495 @@
+@model Employee_Records.Controllers.EmployeeDashboardViewModel
+@using Employee_Records.Models
+@{
+    ViewData["Title"] = "My Dashboard";
+}
+
+@section Styles {
+    <style>
+        .stat-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: none;
+            border-radius: 12px;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.9;
+        }
+        .schedule-day {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.2s ease;
+        }
+        .schedule-day:hover {
+            transform: scale(1.02);
+        }
+        .schedule-today {
+            border: 2px solid #0d6efd;
+            background-color: rgba(13, 110, 253, 0.1) !important;
+        }
+        .chart-container {
+            position: relative;
+            height: 250px;
+        }
+        .attendance-badge {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+            border-radius: 20px;
+        }
+        .card-gradient-present {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        .card-gradient-absent {
+            background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+        }
+        .card-gradient-late {
+            background: linear-gradient(135deg, #ffc107 0%, #fd7e14 100%);
+        }
+        .week-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 12px 12px 0 0;
+        }
+    </style>
+}
+
+<div class="container">
+    <h1 class="mb-4">Welcome, @Model.User.FirstName!</h1>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="row">
+        <!-- User Account Info -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Account Information</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="mb-0">
+                        <dt>Full Name</dt>
+                        <dd>
+                            @Model.User.FirstName
+                            @if (!string.IsNullOrEmpty(Model.User.MiddleInitial))
+                            {
+                                @Model.User.MiddleInitial<text>.</text>
+                            }
+                            @Model.User.LastName
+                            @if (!string.IsNullOrEmpty(Model.User.Suffix))
+                            {
+                                <text>, </text>@Model.User.Suffix
+                            }
+                        </dd>
+                        <dt>Email</dt>
+                        <dd>@Model.User.Email</dd>
+                    </dl>
+                </div>
+                <div class="card-footer d-flex gap-2">
+                    <a asp-controller="EmployeeDashboard" asp-action="Payslips" class="btn btn-success btn-sm">
+                        <i class="bi bi-receipt"></i> Check Payslip
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Employee Record Info -->
+        <div class="col-md-8 mb-4">
+            @if (Model.HasEmployeeRecord && Model.Employee != null)
+            {
+                <div class="card h-100">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">My Employee Profile</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dl>
+                                    <dt>Employee ID</dt>
+                                    <dd>
+                                        @if (!string.IsNullOrEmpty(Model.Employee.EmployeeCode))
+                                        {
+                                            <span class="badge bg-primary fs-6">@Model.Employee.EmployeeCode</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not assigned</span>
+                                        }
+                                    </dd>
+                                    <dt>Name</dt>
+                                    <dd>@Model.Employee.Name</dd>
+                                    <dt>Email</dt>
+                                    <dd>@Model.Employee.Email</dd>
+                                    <dt>Department</dt>
+                                    <dd>
+                                        @if (Model.Employee.Department != null)
+                                        {
+                                            <span class="badge bg-secondary">@Model.Employee.Department.Name</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not assigned</span>
+                                        }
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="col-md-6">
+                                <dl>
+                                    <dt>Position</dt>
+                                    <dd><span class="badge bg-info">@Model.Employee.Position</span></dd>
+                                    <dt>Salary</dt>
+                                    <dd class="text-success fw-bold">₱@Model.Employee.Salary.ToString("N2")</dd>
+                                    <dt>Address</dt>
+                                    <dd>
+                                        @if (!string.IsNullOrEmpty(Model.Employee.Address))
+                                        {
+                                            @Model.Employee.Address
+                                            @if (Model.Employee.Latitude.HasValue && Model.Employee.Longitude.HasValue)
+                                            {
+                                                <span class="badge bg-success ms-1">Location Set</span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">Not provided</span>
+                                        }
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-light">
+                        <small class="text-muted">
+                            <strong>Need to update your details?</strong> Please contact your administrator to request any changes to your profile information.
+                        </small>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card h-100 border-warning">
+                    <div class="card-header bg-warning">
+                        <h5 class="mb-0">Employee Profile Not Found</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="mb-0">
+                            No employee record is linked to your account email (<strong>@Model.User.Email</strong>).
+                        </p>
+                        <p class="text-muted mt-2 mb-0">
+                            Please contact your administrator to create an employee record with your email address,
+                            or wait for them to add you to the system.
+                        </p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @if (Model.HasEmployeeRecord && Model.Employee != null)
+    {
+        <!-- Weekly Attendance Summary -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <h4 class="mb-3">
+                    Weekly Attendance Summary
+                    <small class="text-muted fs-6">
+                        (@Model.WeekStartDate.ToString("MMM dd") - @Model.WeekEndDate.ToString("MMM dd, yyyy"))
+                    </small>
+                </h4>
+            </div>
+            
+            <!-- Present Days Card -->
+            <div class="col-md-4 mb-3">
+                <div class="card stat-card card-gradient-present text-white h-100">
+                    <div class="card-body text-center py-4">
+                        <div class="stat-number">@Model.PresentDays</div>
+                        <div class="stat-label">Days Present</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Absent Days Card -->
+            <div class="col-md-4 mb-3">
+                <div class="card stat-card card-gradient-absent text-white h-100">
+                    <div class="card-body text-center py-4">
+                        <div class="stat-number">@Model.AbsentDays</div>
+                        <div class="stat-label">Days Absent</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Late Days Card -->
+            <div class="col-md-4 mb-3">
+                <div class="card stat-card card-gradient-late text-dark h-100">
+                    <div class="card-body text-center py-4">
+                        <div class="stat-number">@Model.LateDays</div>
+                        <div class="stat-label">Days Late</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Work Hours Breakdown Chart -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="mb-0">Work Hours Breakdown (8-Hour Day)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="hoursChart"></canvas>
+                        </div>
+                        <div class="mt-3">
+                            <div class="row text-center">
+                                <div class="col-4">
+                                    <div class="fw-bold text-success">@Model.AverageWorkedHours hrs</div>
+                                    <small class="text-muted">Avg Work Time</small>
+                                </div>
+                                <div class="col-4">
+                                    <div class="fw-bold text-warning">@Model.AverageBreakHours hrs</div>
+                                    <small class="text-muted">Avg Break Time</small>
+                                </div>
+                                <div class="col-4">
+                                    <div class="fw-bold text-info">@Math.Max(0, Model.UnaccountedHours) hrs</div>
+                                    <small class="text-muted">Other</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Weekly Schedule Calendar -->
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-header week-header">
+                        <h5 class="mb-0">This Week's Schedule</h5>
+                    </div>
+                    <div class="card-body">
+                        @{
+                            var daysOfWeek = new[] { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+                            var today = DateTime.Today;
+                        }
+                        
+                        @for (int i = 0; i < 7; i++)
+                        {
+                            var currentDate = Model.WeekStartDate.AddDays(i);
+                            var schedule = Model.WeeklySchedule.FirstOrDefault(s => s.Date.Date == currentDate.Date);
+                            var attendance = Model.WeeklyAttendance.FirstOrDefault(a => a.Date.Date == currentDate.Date);
+                            var isToday = currentDate.Date == today;
+                            var isWeekend = i >= 5;
+                            
+                            <div class="schedule-day @(isToday ? "schedule-today" : "") @(isWeekend ? "bg-light" : "bg-white border")">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong class="@(isToday ? "text-primary" : "")">
+                                            @daysOfWeek[i]
+                                            @if (isToday)
+                                            {
+                                                <span class="badge bg-primary ms-1">Today</span>
+                                            }
+                                        </strong>
+                                        <div class="text-muted small">@currentDate.ToString("MMM dd")</div>
+                                    </div>
+                                    <div class="text-end">
+                                        @if (isWeekend)
+                                        {
+                                            <span class="text-muted">Day Off</span>
+                                        }
+                                        else if (schedule != null)
+                                        {
+                                            <span class="badge @schedule.ShiftBadgeColor">
+                                                @schedule.ShiftType.ToString() Shift
+                                            </span>
+                                            <div class="small text-muted">@schedule.ShiftDisplay</div>
+                                            
+                                            @if (attendance != null && currentDate <= today)
+                                            {
+                                                <span class="attendance-badge @(attendance.Status == AttendanceStatus.Present ? "bg-success" : attendance.Status == AttendanceStatus.Late ? "bg-warning text-dark" : "bg-danger") text-white mt-1 d-inline-block">
+                                                    @attendance.Status.ToString()
+                                                </span>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <span class="text-muted">No schedule</span>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Attendance Table -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0">Detailed Attendance Records</h5>
+                    </div>
+                    <div class="card-body">
+                        @if (Model.WeeklyAttendance.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Day</th>
+                                            <th>Status</th>
+                                            <th>Time In</th>
+                                            <th>Time Out</th>
+                                            <th>Break</th>
+                                            <th>Worked Hours</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var record in Model.WeeklyAttendance.OrderBy(a => a.Date))
+                                        {
+                                            <tr class="@(record.Date.Date == today ? "table-primary" : "")">
+                                                <td>@record.Date.ToString("MMM dd, yyyy")</td>
+                                                <td>@record.Date.DayOfWeek</td>
+                                                <td>
+                                                    <span class="badge @(record.Status == AttendanceStatus.Present ? "bg-success" : record.Status == AttendanceStatus.Late ? "bg-warning text-dark" : "bg-danger")">
+                                                        @record.Status.ToString()
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    @if (record.TimeIn.HasValue)
+                                                    {
+                                                        @DateTime.Today.Add(record.TimeIn.Value).ToString("h:mm tt")
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">-</span>
+                                                    }
+                                                </td>
+                                                <td>
+                                                    @if (record.TimeOut.HasValue)
+                                                    {
+                                                        @DateTime.Today.Add(record.TimeOut.Value).ToString("h:mm tt")
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">-</span>
+                                                    }
+                                                </td>
+                                                <td>@record.BreakMinutes min</td>
+                                                <td>
+                                                    @if (record.WorkedHours > 0)
+                                                    {
+                                                        <span class="fw-bold text-success">@record.WorkedHours.ToString("F1") hrs</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="text-muted">-</span>
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted text-center mb-0">No attendance records for this week yet.</p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    
+    @if (Model.HasEmployeeRecord && Model.Employee != null)
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const ctx = document.getElementById('hoursChart').getContext('2d');
+                
+                const workedHours = @Model.AverageWorkedHours;
+                const breakHours = @Model.AverageBreakHours;
+                const otherHours = Math.max(0, @Model.UnaccountedHours);
+                
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Work Time', 'Break Time', 'Other'],
+                        datasets: [{
+                            data: [workedHours, breakHours, otherHours],
+                            backgroundColor: [
+                                'rgba(40, 167, 69, 0.8)',   // Green for work
+                                'rgba(255, 193, 7, 0.8)',   // Yellow for break
+                                'rgba(23, 162, 184, 0.8)'   // Cyan for other
+                            ],
+                            borderColor: [
+                                'rgba(40, 167, 69, 1)',
+                                'rgba(255, 193, 7, 1)',
+                                'rgba(23, 162, 184, 1)'
+                            ],
+                            borderWidth: 2,
+                            hoverOffset: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '60%',
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 20,
+                                    usePointStyle: true,
+                                    font: {
+                                        size: 12
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        return context.label + ': ' + context.raw.toFixed(1) + ' hours';
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    }
+}

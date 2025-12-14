@@ -1,0 +1,215 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|c:\\users\\acer\\downloads\\employee records\\employee records\\employee records\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|solutionrelative:employee records\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|c:\\users\\acer\\downloads\\employee records\\employee records\\employee records\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|solutionrelative:employee records\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|c:\\users\\acer\\downloads\\employee records\\employee records\\employee records\\models\\employeemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|solutionrelative:employee records\\models\\employeemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|c:\\users\\acer\\downloads\\employee records\\employee records\\employee records\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|solutionrelative:employee records\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|c:\\users\\acer\\downloads\\employee records\\employee records\\employee records\\views\\employee\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|solutionrelative:employee records\\views\\employee\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|c:\\users\\acer\\downloads\\employee records\\employee records\\employee records\\controllers\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|solutionrelative:employee records\\controllers\\employee.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|c:\\users\\acer\\downloads\\employee records\\employee records\\employee records\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|solutionrelative:employee records\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|c:\\users\\acer\\downloads\\employee records\\employee records\\employee records\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|solutionrelative:employee records\\areas\\identity\\pages\\account\\login.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|c:\\users\\acer\\downloads\\employee records\\employee records\\employee records\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|solutionrelative:employee records\\areas\\identity\\pages\\account\\register.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|c:\\users\\acer\\downloads\\employee records\\employee records\\employee records\\smtpsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|solutionrelative:employee records\\smtpsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|c:\\users\\acer\\downloads\\employee records\\employee records\\employee records\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{ECC4A2A1-2E4C-4979-B0DB-6D679A774ED8}|Employee Records\\Employee Records.csproj|solutionrelative:employee records\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAABkAAAAAAAAAAAAkwDcAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T16:45:56.836Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Employee.cs",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Controllers\\Employee.cs",
+              "RelativeDocumentMoniker": "Employee Records\\Controllers\\Employee.cs",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Controllers\\Employee.cs",
+              "RelativeToolTip": "Employee Records\\Controllers\\Employee.cs",
+              "ViewState": "AgIAAFsAAAAAAAAAAADwv14AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T16:41:15.594Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Program.cs",
+              "RelativeDocumentMoniker": "Employee Records\\Program.cs",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Program.cs",
+              "RelativeToolTip": "Employee Records\\Program.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAADgvy0AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T16:27:12.138Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\appsettings.json",
+              "RelativeDocumentMoniker": "Employee Records\\appsettings.json",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\appsettings.json",
+              "RelativeToolTip": "Employee Records\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-27T05:17:45.596Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "EmployeeModel.cs",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Models\\EmployeeModel.cs",
+              "RelativeDocumentMoniker": "Employee Records\\Models\\EmployeeModel.cs",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Models\\EmployeeModel.cs",
+              "RelativeToolTip": "Employee Records\\Models\\EmployeeModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-12T04:08:17.895Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Views\\Employee\\Edit.cshtml",
+              "RelativeDocumentMoniker": "Employee Records\\Views\\Employee\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Views\\Employee\\Edit.cshtml",
+              "RelativeToolTip": "Employee Records\\Views\\Employee\\Edit.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-12-12T04:09:02.124Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Data\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "Employee Records\\Data\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Data\\ApplicationDbContext.cs",
+              "RelativeToolTip": "Employee Records\\Data\\ApplicationDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T15:34:03.213Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Employee Records\\Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Employee Records\\Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAABsAAAAAAAAAAAAAAAoAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-27T05:20:48.057Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Login.cshtml.cs",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeDocumentMoniker": "Employee Records\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "RelativeToolTip": "Employee Records\\Areas\\Identity\\Pages\\Account\\Login.cshtml.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-28T16:51:18.282Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Register.cshtml",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeDocumentMoniker": "Employee Records\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "RelativeToolTip": "Employee Records\\Areas\\Identity\\Pages\\Account\\Register.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-11-28T17:02:03.499Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "SmtpSettings.cs",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\SmtpSettings.cs",
+              "RelativeDocumentMoniker": "Employee Records\\SmtpSettings.cs",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\SmtpSettings.cs",
+              "RelativeToolTip": "Employee Records\\SmtpSettings.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAAACYAAABMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-28T17:14:11.1Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Models\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "Employee Records\\Models\\ErrorViewModel.cs",
+              "ToolTip": "C:\\Users\\ACER\\Downloads\\Employee Records\\Employee Records\\Employee Records\\Models\\ErrorViewModel.cs",
+              "RelativeToolTip": "Employee Records\\Models\\ErrorViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-27T05:17:29.03Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

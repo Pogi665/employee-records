@@ -1,0 +1,175 @@
+@model Employee_Records.Controllers.EmployeePayslipsViewModel
+@{
+    ViewData["Title"] = "My Payslips";
+}
+
+@section Styles {
+    <style>
+        .payslip-card {
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: none;
+            border-radius: 12px;
+        }
+        .payslip-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+        }
+        .period-badge {
+            font-size: 0.85rem;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+        .amount-display {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .pending-card {
+            border-left: 4px solid #ffc107;
+        }
+        .approved-card {
+            border-left: 4px solid #28a745;
+        }
+    </style>
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="mb-1">My Payslips</h1>
+            <p class="text-muted mb-0">View your salary records and request new payslips</p>
+        </div>
+        <div>
+            <a asp-action="RequestPayslip" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Request Payslip
+            </a>
+            <a asp-action="Index" class="btn btn-outline-secondary ms-2">
+                <i class="bi bi-arrow-left"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["Info"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            @TempData["Info"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- Pending Requests Section -->
+    @if (Model.PendingRequests.Any())
+    {
+        <div class="mb-5">
+            <h4 class="mb-3">
+                <i class="bi bi-hourglass-split text-warning"></i> Pending Requests
+            </h4>
+            <div class="row g-3">
+                @foreach (var request in Model.PendingRequests)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card payslip-card pending-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <span class="badge bg-warning text-dark period-badge">
+                                        @request.PayPeriodDisplay
+                                    </span>
+                                    <span class="badge bg-warning text-dark">Pending</span>
+                                </div>
+                                <p class="text-muted mb-2">
+                                    <small>Requested on @request.RequestDate.ToString("MMM dd, yyyy h:mm tt")</small>
+                                </p>
+                                <p class="mb-0 text-muted">
+                                    <i class="bi bi-info-circle"></i> Waiting for admin approval
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <!-- Approved Payslips Section -->
+    <div class="mb-4">
+        <h4 class="mb-3">
+            <i class="bi bi-check-circle text-success"></i> Approved Payslips
+        </h4>
+        
+        @if (Model.ApprovedPayslips.Any())
+        {
+            <div class="row g-3">
+                @foreach (var payslip in Model.ApprovedPayslips)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card payslip-card approved-card h-100">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-3">
+                                    <span class="badge bg-primary period-badge">
+                                        @payslip.PayPeriodDisplay
+                                    </span>
+                                    <span class="badge bg-success">Approved</span>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <small class="text-muted">Net Pay</small>
+                                    <div class="amount-display text-success">
+                                        ₱@payslip.NetPay.ToString("N2")
+                                    </div>
+                                </div>
+                                
+                                <div class="row mb-3">
+                                    <div class="col-6">
+                                        <small class="text-muted">Gross Pay</small>
+                                        <div class="fw-bold">₱@payslip.GrossPay.ToString("N2")</div>
+                                    </div>
+                                    <div class="col-6">
+                                        <small class="text-muted">Deductions</small>
+                                        <div class="fw-bold text-danger">-₱@payslip.TotalDeductions.ToString("N2")</div>
+                                    </div>
+                                </div>
+                                
+                                <p class="text-muted mb-3">
+                                    <small>Generated on @payslip.GeneratedDate.ToString("MMM dd, yyyy")</small>
+                                </p>
+                                
+                                <a asp-action="ViewPayslip" asp-route-id="@payslip.Id" class="btn btn-primary btn-sm w-100">
+                                    <i class="bi bi-eye"></i> View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-receipt display-1 text-muted mb-3"></i>
+                    <h5 class="text-muted">No approved payslips yet</h5>
+                    <p class="text-muted mb-3">Request a payslip to get started</p>
+                    <a asp-action="RequestPayslip" class="btn btn-success">
+                        <i class="bi bi-plus-circle"></i> Request Payslip
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

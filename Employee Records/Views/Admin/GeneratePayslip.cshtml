@@ -1,0 +1,224 @@
+@model Employee_Records.Controllers.GeneratePayslipViewModel
+@{
+    ViewData["Title"] = "Generate Payslip";
+}
+
+@section Styles {
+    <style>
+        .preview-card {
+            border: 2px dashed #28a745;
+            background: #f8fff8;
+        }
+        .amount-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            border-bottom: 1px dotted #dee2e6;
+        }
+        .amount-row:last-child {
+            border-bottom: none;
+        }
+        .amount-row.total {
+            border-top: 2px solid #495057;
+            font-weight: 700;
+            padding-top: 0.75rem;
+            margin-top: 0.5rem;
+        }
+    </style>
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="h2">Generate Payslip</h1>
+            <p class="text-muted mb-0">Review and approve payslip for @Model.Request.Employee?.Name</p>
+        </div>
+        <a asp-action="PayslipRequests" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Requests
+        </a>
+    </div>
+
+    <div class="row">
+        <!-- Request Info -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Request Details</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="mb-0">
+                        <dt>Employee</dt>
+                        <dd>
+                            <strong>@Model.Request.Employee?.Name</strong>
+                            @if (!string.IsNullOrEmpty(Model.Request.Employee?.EmployeeCode))
+                            {
+                                <br><span class="badge bg-primary">@Model.Request.Employee.EmployeeCode</span>
+                            }
+                        </dd>
+
+                        <dt>Email</dt>
+                        <dd>@Model.Request.Employee?.Email</dd>
+
+                        <dt>Department</dt>
+                        <dd>
+                            @if (Model.Request.Employee?.Department != null)
+                            {
+                                <span class="badge bg-secondary">@Model.Request.Employee.Department.Name</span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">Not assigned</span>
+                            }
+                        </dd>
+
+                        <dt>Position</dt>
+                        <dd><span class="badge bg-info">@Model.Request.Employee?.Position</span></dd>
+
+                        <dt>Monthly Salary</dt>
+                        <dd class="text-success fw-bold fs-5">₱@Model.Request.Employee?.Salary.ToString("N2")</dd>
+
+                        <dt>Pay Period</dt>
+                        <dd><span class="badge bg-warning text-dark">@Model.Request.PayPeriodDisplay</span></dd>
+
+                        <dt>Request Date</dt>
+                        <dd>@Model.Request.RequestDate.ToString("MMM dd, yyyy h:mm tt")</dd>
+                    </dl>
+                </div>
+            </div>
+
+            <div class="card border-warning">
+                <div class="card-body">
+                    <h6 class="text-warning"><i class="bi bi-info-circle"></i> Note</h6>
+                    <small class="text-muted">
+                        The payslip values are automatically calculated based on the employee's salary and Philippine government deductions (SSS, PhilHealth, Pag-IBIG, Withholding Tax).
+                        Holiday pay and overtime are randomly generated for demonstration purposes.
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payslip Preview -->
+        <div class="col-md-8">
+            <div class="card preview-card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-receipt"></i> Payslip Preview</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Work Summary -->
+                    <div class="row mb-4">
+                        <div class="col-3 text-center">
+                            <div class="bg-light rounded p-2">
+                                <div class="fs-5 fw-bold text-primary">@Model.PreviewPayslip.DaysWorked</div>
+                                <small class="text-muted">Days Worked</small>
+                            </div>
+                        </div>
+                        <div class="col-3 text-center">
+                            <div class="bg-light rounded p-2">
+                                <div class="fs-5 fw-bold text-success">@Model.PreviewPayslip.OvertimeHours.ToString("F1")</div>
+                                <small class="text-muted">OT Hours</small>
+                            </div>
+                        </div>
+                        <div class="col-3 text-center">
+                            <div class="bg-light rounded p-2">
+                                <div class="fs-5 fw-bold text-warning">@Model.PreviewPayslip.RegularHolidaysWorked</div>
+                                <small class="text-muted">Regular Holidays</small>
+                            </div>
+                        </div>
+                        <div class="col-3 text-center">
+                            <div class="bg-light rounded p-2">
+                                <div class="fs-5 fw-bold text-info">@Model.PreviewPayslip.SpecialHolidaysWorked</div>
+                                <small class="text-muted">Special Holidays</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Earnings -->
+                        <div class="col-md-6 mb-3">
+                            <h6 class="text-success border-bottom pb-2"><i class="bi bi-plus-circle"></i> Earnings</h6>
+                            <div class="amount-row">
+                                <span>Basic Pay</span>
+                                <span class="text-success">₱@Model.PreviewPayslip.BasicPay.ToString("N2")</span>
+                            </div>
+                            @if (Model.PreviewPayslip.HolidayPay > 0)
+                            {
+                                <div class="amount-row">
+                                    <span>Holiday Pay</span>
+                                    <span class="text-success">₱@Model.PreviewPayslip.HolidayPay.ToString("N2")</span>
+                                </div>
+                            }
+                            @if (Model.PreviewPayslip.OvertimePay > 0)
+                            {
+                                <div class="amount-row">
+                                    <span>Overtime Pay</span>
+                                    <span class="text-success">₱@Model.PreviewPayslip.OvertimePay.ToString("N2")</span>
+                                </div>
+                            }
+                            @if (Model.PreviewPayslip.Allowances > 0)
+                            {
+                                <div class="amount-row">
+                                    <span>Allowances</span>
+                                    <span class="text-success">₱@Model.PreviewPayslip.Allowances.ToString("N2")</span>
+                                </div>
+                            }
+                            <div class="amount-row total">
+                                <span>Gross Pay</span>
+                                <span class="text-success">₱@Model.PreviewPayslip.GrossPay.ToString("N2")</span>
+                            </div>
+                        </div>
+
+                        <!-- Deductions -->
+                        <div class="col-md-6 mb-3">
+                            <h6 class="text-danger border-bottom pb-2"><i class="bi bi-dash-circle"></i> Deductions</h6>
+                            <div class="amount-row">
+                                <span>SSS</span>
+                                <span class="text-danger">₱@Model.PreviewPayslip.SSS.ToString("N2")</span>
+                            </div>
+                            <div class="amount-row">
+                                <span>PhilHealth</span>
+                                <span class="text-danger">₱@Model.PreviewPayslip.PhilHealth.ToString("N2")</span>
+                            </div>
+                            <div class="amount-row">
+                                <span>Pag-IBIG</span>
+                                <span class="text-danger">₱@Model.PreviewPayslip.PagIBIG.ToString("N2")</span>
+                            </div>
+                            <div class="amount-row">
+                                <span>Withholding Tax</span>
+                                <span class="text-danger">₱@Model.PreviewPayslip.WithholdingTax.ToString("N2")</span>
+                            </div>
+                            @if (Model.PreviewPayslip.OtherDeductions > 0)
+                            {
+                                <div class="amount-row">
+                                    <span>Other Deductions</span>
+                                    <span class="text-danger">₱@Model.PreviewPayslip.OtherDeductions.ToString("N2")</span>
+                                </div>
+                            }
+                            <div class="amount-row total">
+                                <span>Total Deductions</span>
+                                <span class="text-danger">₱@Model.PreviewPayslip.TotalDeductions.ToString("N2")</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Net Pay -->
+                    <div class="bg-success text-white p-4 rounded text-center mt-3">
+                        <small class="d-block mb-1 opacity-75">NET PAY</small>
+                        <div class="fs-2 fw-bold">₱@Model.PreviewPayslip.NetPay.ToString("N2")</div>
+                    </div>
+                </div>
+                <div class="card-footer bg-light">
+                    <form asp-action="ApprovePayslip" method="post" class="d-inline">
+                        <input type="hidden" name="requestId" value="@Model.Request.Id" />
+                        <button type="submit" class="btn btn-success btn-lg">
+                            <i class="bi bi-check-circle"></i> Approve & Generate Payslip
+                        </button>
+                    </form>
+                    <a asp-action="RejectRequest" asp-route-requestId="@Model.Request.Id" class="btn btn-outline-danger btn-lg ms-2">
+                        <i class="bi bi-x-circle"></i> Reject Request
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

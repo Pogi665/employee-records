@@ -1,0 +1,56 @@
+@model Employee_Records.Models.Department
+@{
+    ViewData["Title"] = "Delete Department";
+    var employeeCount = (int)ViewBag.EmployeeCount;
+}
+
+<div class="container">
+    <h1 class="mb-4">Delete Department</h1>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">Confirm Deletion</h5>
+                </div>
+                <div class="card-body">
+                    <p>Are you sure you want to delete this department?</p>
+
+                    <dl class="mb-3">
+                        <dt>Name</dt>
+                        <dd><strong>@Model.Name</strong></dd>
+                        
+                        @if (!string.IsNullOrEmpty(Model.Description))
+                        {
+                            <dt>Description</dt>
+                            <dd>@Model.Description</dd>
+                        }
+                    </dl>
+
+                    @if (employeeCount > 0)
+                    {
+                        <div class="alert alert-warning">
+                            <strong>Warning:</strong> This department has <strong>@employeeCount</strong> employee(s) assigned.
+                            You must reassign them to another department before deleting.
+                        </div>
+                    }
+
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        <div class="d-flex gap-2">
+                            @if (employeeCount == 0)
+                            {
+                                <button type="submit" class="btn btn-danger">Yes, Delete</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-danger" disabled>Cannot Delete</button>
+                            }
+                            <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

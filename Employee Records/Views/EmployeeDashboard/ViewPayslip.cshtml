@@ -1,0 +1,258 @@
+@model Employee_Records.Models.Payslip
+@{
+    ViewData["Title"] = "Payslip Details";
+}
+
+@section Styles {
+    <style>
+        .payslip-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .payslip-header {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            border-radius: 12px 12px 0 0;
+            padding: 2rem;
+        }
+        .payslip-body {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            padding: 2rem;
+        }
+        .section-title {
+            font-weight: 600;
+            color: #495057;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .amount-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #dee2e6;
+        }
+        .amount-row:last-child {
+            border-bottom: none;
+        }
+        .amount-row.total {
+            border-bottom: 2px solid #495057;
+            border-top: 2px solid #495057;
+            font-weight: 700;
+            font-size: 1.1rem;
+            padding: 0.75rem 0;
+            margin-top: 0.5rem;
+        }
+        .deduction {
+            color: #dc3545;
+        }
+        .earning {
+            color: #28a745;
+        }
+        .net-pay-display {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        .info-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        @@media print {
+            .no-print {
+                display: none !important;
+            }
+            .payslip-container {
+                max-width: 100%;
+            }
+        }
+    </style>
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4 no-print">
+        <a asp-action="Payslips" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left"></i> Back to Payslips
+        </a>
+        <button onclick="window.print()" class="btn btn-primary">
+            <i class="bi bi-printer"></i> Print Payslip
+        </button>
+    </div>
+
+    <div class="payslip-container">
+        <!-- Payslip Header -->
+        <div class="payslip-header">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h2 class="mb-1">Employee Payslip</h2>
+                    <p class="mb-0 opacity-75">@Model.PayPeriodDisplay</p>
+                </div>
+                <div class="col-md-4 text-md-end">
+                    <div class="badge bg-white text-success fs-6 px-3 py-2">
+                        @Model.Status.ToString()
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payslip Body -->
+        <div class="payslip-body">
+            <!-- Employee Info -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h6 class="text-muted mb-2">Employee Information</h6>
+                    <p class="mb-1"><strong>@Model.Employee?.Name</strong></p>
+                    <p class="mb-1 text-muted">@Model.Employee?.Email</p>
+                    <p class="mb-0">
+                        <span class="badge bg-info">@Model.Employee?.Position</span>
+                        @if (Model.Employee?.Department != null)
+                        {
+                            <span class="badge bg-secondary ms-1">@Model.Employee.Department.Name</span>
+                        }
+                    </p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <h6 class="text-muted mb-2">Pay Period</h6>
+                    <p class="mb-1"><strong>@Model.PayPeriodStart.ToString("MMMM dd") - @Model.PayPeriodEnd.ToString("dd, yyyy")</strong></p>
+                    <p class="mb-1 text-muted">Generated: @Model.GeneratedDate.ToString("MMM dd, yyyy")</p>
+                    @if (!string.IsNullOrEmpty(Model.ApprovedBy))
+                    {
+                        <p class="mb-0 text-muted">Approved by: @Model.ApprovedBy</p>
+                    }
+                </div>
+            </div>
+
+            <hr>
+
+            <!-- Work Summary -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h5 class="section-title">Work Summary</h5>
+                    <div class="row">
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="text-center p-3 bg-light rounded">
+                                <div class="fs-4 fw-bold text-primary">@Model.DaysWorked</div>
+                                <small class="text-muted">Days Worked</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="text-center p-3 bg-light rounded">
+                                <div class="fs-4 fw-bold text-success">@Model.OvertimeHours.ToString("F1")</div>
+                                <small class="text-muted">Overtime Hours</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="text-center p-3 bg-light rounded">
+                                <div class="fs-4 fw-bold text-warning">@Model.RegularHolidaysWorked</div>
+                                <small class="text-muted">Regular Holidays</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-6 mb-3">
+                            <div class="text-center p-3 bg-light rounded">
+                                <div class="fs-4 fw-bold text-info">@Model.SpecialHolidaysWorked</div>
+                                <small class="text-muted">Special Holidays</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Earnings -->
+                <div class="col-md-6 mb-4">
+                    <h5 class="section-title">Earnings</h5>
+                    <div class="amount-row">
+                        <span>Basic Pay</span>
+                        <span class="earning">₱@Model.BasicPay.ToString("N2")</span>
+                    </div>
+                    @if (Model.HolidayPay > 0)
+                    {
+                        <div class="amount-row">
+                            <span>Holiday Pay</span>
+                            <span class="earning">₱@Model.HolidayPay.ToString("N2")</span>
+                        </div>
+                    }
+                    @if (Model.OvertimePay > 0)
+                    {
+                        <div class="amount-row">
+                            <span>Overtime Pay</span>
+                            <span class="earning">₱@Model.OvertimePay.ToString("N2")</span>
+                        </div>
+                    }
+                    @if (Model.Allowances > 0)
+                    {
+                        <div class="amount-row">
+                            <span>Allowances</span>
+                            <span class="earning">₱@Model.Allowances.ToString("N2")</span>
+                        </div>
+                    }
+                    <div class="amount-row total">
+                        <span>Gross Pay</span>
+                        <span class="earning">₱@Model.GrossPay.ToString("N2")</span>
+                    </div>
+                </div>
+
+                <!-- Deductions -->
+                <div class="col-md-6 mb-4">
+                    <h5 class="section-title">Deductions</h5>
+                    <div class="amount-row">
+                        <span>SSS <span class="info-badge bg-light text-muted">Social Security</span></span>
+                        <span class="deduction">₱@Model.SSS.ToString("N2")</span>
+                    </div>
+                    <div class="amount-row">
+                        <span>PhilHealth <span class="info-badge bg-light text-muted">Health Insurance</span></span>
+                        <span class="deduction">₱@Model.PhilHealth.ToString("N2")</span>
+                    </div>
+                    <div class="amount-row">
+                        <span>Pag-IBIG <span class="info-badge bg-light text-muted">Housing Fund</span></span>
+                        <span class="deduction">₱@Model.PagIBIG.ToString("N2")</span>
+                    </div>
+                    <div class="amount-row">
+                        <span>Withholding Tax</span>
+                        <span class="deduction">₱@Model.WithholdingTax.ToString("N2")</span>
+                    </div>
+                    @if (Model.OtherDeductions > 0)
+                    {
+                        <div class="amount-row">
+                            <span>Other Deductions</span>
+                            <span class="deduction">₱@Model.OtherDeductions.ToString("N2")</span>
+                        </div>
+                    }
+                    <div class="amount-row total">
+                        <span>Total Deductions</span>
+                        <span class="deduction">₱@Model.TotalDeductions.ToString("N2")</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Net Pay -->
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="bg-success text-white p-4 rounded text-center">
+                        <small class="d-block mb-1 opacity-75">NET PAY</small>
+                        <div class="net-pay-display">₱@Model.NetPay.ToString("N2")</div>
+                    </div>
+                </div>
+            </div>
+
+            @if (!string.IsNullOrEmpty(Model.Remarks))
+            {
+                <div class="mt-4">
+                    <h6 class="text-muted">Remarks</h6>
+                    <p class="mb-0">@Model.Remarks</p>
+                </div>
+            }
+
+            <!-- Footer -->
+            <div class="mt-4 pt-4 border-top text-center text-muted">
+                <small>
+                    This is a computer-generated payslip. For any discrepancies, please contact HR.
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,137 @@
+@page
+@model RegisterAdminModel
+@{
+    ViewData["Title"] = "Admin Registration";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="row">
+    <div class="col-md-8 col-lg-6">
+        <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h2>Create an Admin account.</h2>
+            <hr />
+            <div class="alert alert-warning">
+                <strong>Admin Registration:</strong> You need the secret admin code to register as an administrator.
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            
+            <!-- Admin Code -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.AdminCode" class="form-control" aria-required="true" placeholder="Admin Code" />
+                <label asp-for="Input.AdminCode">Admin Registration Code</label>
+                <span asp-validation-for="Input.AdminCode" class="text-danger"></span>
+            </div>
+            
+            <hr />
+            
+            <!-- First Name -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.FirstName" class="form-control" aria-required="true" placeholder="First Name" />
+                <label asp-for="Input.FirstName">First Name</label>
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+            
+            <!-- Last Name -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.LastName" class="form-control" aria-required="true" placeholder="Last Name" />
+                <label asp-for="Input.LastName">Last Name</label>
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+            
+            <!-- Middle Initial Section -->
+            <div class="mb-3">
+                <div class="form-floating" id="middleInitialContainer">
+                    <input asp-for="Input.NoMiddleInitial" type="hidden" value="true" />
+                    <input asp-for="Input.MiddleInitial" class="form-control" placeholder="M.I." maxlength="5" />
+                    <label asp-for="Input.MiddleInitial">Middle Initial (Optional)</label>
+                    <span asp-validation-for="Input.MiddleInitial" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <!-- Suffix Section -->
+            <div class="mb-4">
+                <div class="form-check mb-3">
+                    <input asp-for="Input.NoMiddleInitial" class="form-check-input" type="checkbox" id="noMiddleInitial" />
+                    <input asp-for="Input.HasSuffix" class="form-check-input" type="checkbox" id="hasSuffix" />
+                    <label class="form-check-label" for="hasSuffix">
+                        I have a suffix (Jr., Sr., III, etc.)
+                    </label>
+                </div>
+                <div class="form-floating" id="suffixContainer" style="display: none;">
+                    <input asp-for="Input.Suffix" class="form-control" placeholder="Suffix" maxlength="10" />
+                    <label asp-for="Input.Suffix">Suffix</label>
+                    <span asp-validation-for="Input.Suffix" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <hr />
+            
+            <!-- Email -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                <label asp-for="Input.Email">Email</label>
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            
+            <!-- Password -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label asp-for="Input.Password">Password</label>
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+                <div class="form-text text-muted small">
+                    Include at least one uppercase and special character, and one number.
+                </div>
+            </div>
+            
+            <!-- Confirm Password -->
+            <div class="form-floating mb-3">
+                <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <label asp-for="Input.ConfirmPassword">Confirm Password</label>
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-danger">Register as Admin</button>
+        </form>
+        <hr />
+        <p class="text-muted">
+            Not an administrator? <a asp-page="./Register">Register as Employee</a>
+        </p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Handle "No Middle Initial" checkbox
+            const noMiddleInitialCheckbox = document.getElementById('noMiddleInitial');
+            const middleInitialContainer = document.getElementById('middleInitialContainer');
+            const middleInitialInput = document.querySelector('input[name="Input.MiddleInitial"]');
+            
+            noMiddleInitialCheckbox.addEventListener('change', function () {
+                if (this.checked) {
+                    middleInitialContainer.style.display = 'none';
+                    middleInitialInput.value = '';
+                } else {
+                    middleInitialContainer.style.display = 'block';
+                }
+            });
+            
+            // Handle "Has Suffix" checkbox
+            const hasSuffixCheckbox = document.getElementById('hasSuffix');
+            const suffixContainer = document.getElementById('suffixContainer');
+            const suffixInput = document.querySelector('input[name="Input.Suffix"]');
+            
+            hasSuffixCheckbox.addEventListener('change', function () {
+                if (this.checked) {
+                    suffixContainer.style.display = 'block';
+                } else {
+                    suffixContainer.style.display = 'none';
+                    suffixInput.value = '';
+                }
+            });
+        });
+    </script>
+}
+

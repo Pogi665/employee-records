@@ -1,0 +1,96 @@
+@model Employee_Records.Models.Department
+@{
+    ViewData["Title"] = "Department Details";
+    var employees = (List<Employee_Records.Models.EmployeeModel.Employee>)ViewBag.Employees;
+}
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>@Model.Name</h1>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Department Info</h5>
+                </div>
+                <div class="card-body">
+                    <dl class="mb-0">
+                        <dt>Name</dt>
+                        <dd>@Model.Name</dd>
+                        
+                        <dt>Description</dt>
+                        <dd>
+                            @if (!string.IsNullOrEmpty(Model.Description))
+                            {
+                                @Model.Description
+                            }
+                            else
+                            {
+                                <span class="text-muted fst-italic">No description</span>
+                            }
+                        </dd>
+                        
+                        <dt>Total Employees</dt>
+                        <dd><span class="badge bg-info fs-6">@employees.Count</span></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">Employees in this Department</h5>
+                </div>
+                @if (employees.Any())
+                {
+                    <div class="card-body p-0">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Employee Code</th>
+                                    <th>Name</th>
+                                    <th>Position</th>
+                                    <th>Email</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var emp in employees)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(emp.EmployeeCode))
+                                            {
+                                                <span class="badge bg-primary">@emp.EmployeeCode</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">-</span>
+                                            }
+                                        </td>
+                                        <td>@emp.Name</td>
+                                        <td><span class="badge bg-secondary">@emp.Position</span></td>
+                                        <td>@emp.Email</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="card-body">
+                        <p class="text-muted mb-0">No employees are assigned to this department yet.</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
